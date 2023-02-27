@@ -36,13 +36,29 @@ class GoogleAuth extends Component {
   onSignOutClick = () => {
     this.auth.signOut();
   };
+  profilePic = () => {
+    const image = window.gapi.auth2
+      .getAuthInstance()
+      .currentUser.get()
+      .getBasicProfile()
+      .getImageUrl();
+    return image;
+  };
   renderAuthButton() {
     if (this.props.isSignedIn === null) {
       return null;
     } else if (this.props.isSignedIn) {
       return (
-        <button onClick={this.onSignOutClick} className="ui red google button">
-          <i className="google icon" />
+        <button
+          style={{ display: 'flex', alignContent: 'center', gap: '3px' }}
+          onClick={this.onSignOutClick}
+          className="ui red google button"
+        >
+          <img
+            style={{ width: '20px', height: '20px', borderRadius: '100%' }}
+            src={this.profilePic()}
+            alt={'user image'}
+          />
           Sign Out
         </button>
       );
@@ -67,3 +83,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, { signIn, signOut })(GoogleAuth);
 //NOTE:the arguments we used in the connect function [{signIn,login,signout}] act as a prop..so we can acess them by this.props
+//const image = this.auth.currentUser.get().getBasicProfile().getImageUrl();
+//console.log(image);
+//return image;

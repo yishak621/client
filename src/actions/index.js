@@ -1,4 +1,5 @@
 import streams from '../apis/streams';
+import history from '../history';
 import {
   SIGN_IN,
   SIGN_OUT,
@@ -27,8 +28,9 @@ export const createStream = (formValues) => {
   return async (dispatch, getState) => {
     const { userId } = getState().auth;
     const response = await streams.post('/streams', { ...formValues, userId });
-
     dispatch({ type: CREATE_STREAM, payload: response.data });
+    //do some programmatic navigation to get the user back to the root route
+    history.push('/');
   };
 };
 //fetch streams-all streams on our data
@@ -48,8 +50,9 @@ export const fetchStream = (id) => {
 //fetch stream-editing[PUT request] the specific id and and the updated formvalues
 export const editStream = (id, formValues) => {
   return async (dispatch) => {
-    const response = await streams.put(`/streams/${id}`, formValues);
+    const response = await streams.patch(`/streams/${id}`, formValues);
     dispatch({ type: EDIT_STREAM, payload: response.data });
+    history.push('/');
   };
 };
 
@@ -61,3 +64,7 @@ export const deleteStream = (id) => {
     dispatch({ type: DELETE_STREAM, payload: id });
   };
 };
+
+//Restfull convention API request
+//PUT -update all records
+//PATCH -update some records
