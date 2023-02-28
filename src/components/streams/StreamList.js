@@ -31,11 +31,12 @@ class StreamList extends React.Component {
     return this.props.streams.map((stream) => {
       const { title, description, id } = stream;
       return (
-        <div className="item" key={id}>
+        <div className="item" key={id} style={{ cursor: 'pointer' }}>
           {this.renderAdmin(stream)}
           <i className="large middle aligned icon camera" />
           <div className="content">
-            {title}
+            <Link to={`streams/${id}`}>{title}</Link>
+
             <div className="description">{description} </div>
           </div>
         </div>
