@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 //routes
 import StreamCreate from './streams/StreamCreate';
 import StreamDelete from './streams/Streamdelete';
@@ -16,11 +16,13 @@ const App = () => {
       <Router history={history}>
         <div>
           <Header />
-          <Route path="/" exact component={StreamList} />
-          <Route path="/streams/new" exact component={StreamCreate} />
-          <Route path="/streams/edit/:id" exact component={StreamEdit} />
-          <Route path="/streams/delete/:id" exact component={StreamDelete} />
-          <Route path="/streams:id" exact component={StreamShow} />
+          <Switch>
+            <Route path="/" exact component={StreamList} />
+            <Route path="/streams/new" exact component={StreamCreate} />
+            <Route path="/streams/edit/:id" exact component={StreamEdit} />
+            <Route path="/streams/delete/:id" exact component={StreamDelete} />
+            <Route path="/streams/:id" exact component={StreamShow} />
+          </Switch>
         </div>
       </Router>
     </div>
@@ -33,3 +35,7 @@ export default App;
 // <Route path="/streams/edit/:id" exact component={StreamEdit} />
 //to enable routing to a specific stream using id ....we use id[we can say the name as we want] and we can grab that form our props
 //we are not limited to only navigate through one params ...but we can also use <Route path="/streams/edit/:id:another" exact component={StreamEdit} />
+
+//Router Case-it show every matched path to screen and
+//path="/streams/new" [type-variable] and path="/streams/:id" [type-wildcard and variable] is treated as variable and showen to screen
+//to solve this issue we use switch--
